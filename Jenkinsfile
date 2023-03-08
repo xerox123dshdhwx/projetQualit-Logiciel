@@ -5,7 +5,7 @@ node {
   stage('SonarQube Analysis') {
     def mvn = tool 'mvn';
     withSonarQubeEnv() {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Simp_Quality_Project"
+      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Simp_Quality_Project_Sonnar"
     }
   }
 }
