@@ -45,7 +45,7 @@ class RandomTimerTest {
         double standardDev = Math.sqrt((n * sommeSqrt - Math.pow(somme, 2)) / (n * (n - 1)));
         for (int i = 0; i < 50; i++) {
             int e = rt.next();
-            assertTrue(experimentalAvg - 3*standardDev <= e && e <= experimentalAvg + 3*standardDev );
+            assertTrue(average - 3*standardDev <= e && e <= average + 3*standardDev );
         }
     }
 
