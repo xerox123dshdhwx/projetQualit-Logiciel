@@ -39,13 +39,13 @@ class RandomTimerTest {
             somme += e;
             sommeSqrt += (long) e * e;
         }
-        double theoricalAvg = (double) somme / n;
-        assertTrue(average - average * 0.01 <= theoricalAvg && theoricalAvg <= average + average * 0.01);
+        double experimentalAvg = (double) somme / n;
+        assertTrue(average - average * 0.01 <= experimentalAvg && experimentalAvg <= average + average * 0.01);
 
         double standardDev = Math.sqrt((n * sommeSqrt - Math.pow(somme, 2)) / (n * (n - 1)));
         for (int i = 0; i < 50; i++) {
             int e = rt.next();
-            assertTrue(theoricalAvg - 3*standardDev <= e && e <= theoricalAvg + 3*standardDev );
+            assertTrue(experimentalAvg - 3*standardDev <= e && e <= experimentalAvg + 3*standardDev );
         }
     }
 
