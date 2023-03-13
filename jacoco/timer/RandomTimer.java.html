@@ -11,13 +11,13 @@ import java.util.Random;
 
 public class RandomTimer implements Timer {
 	
-<span class="nc" id="L14">	public static enum randomDistribution {</span>
-<span class="nc" id="L15">		POISSON, EXP, POSIBILIST, GAUSSIAN;</span>
+<span class="fc" id="L14">	public static enum randomDistribution {</span>
+<span class="fc" id="L15">		POISSON, EXP, POSIBILIST, GAUSSIAN;</span>
 	}
 	
 	//private static String randomDistributionString[] = {&quot;POISSON&quot;, &quot;EXP&quot;, &quot;POSIBILIST&quot;, &quot;GAUSSIAN&quot;};
 	
-<span class="nc" id="L20">	private Random r = new Random();</span>
+<span class="pc" id="L20">	private Random r = new Random();</span>
 	private randomDistribution distribution;
 	private double rate;
 	private double mean;
@@ -27,10 +27,10 @@ public class RandomTimer implements Timer {
 	
 	
 	public static randomDistribution string2Distribution(String distributionName){
-<span class="nc" id="L30">		return randomDistribution.valueOf(randomDistribution.class, distributionName.toUpperCase());</span>
+<span class="fc" id="L30">		return randomDistribution.valueOf(randomDistribution.class, distributionName.toUpperCase());</span>
 	}	
 	public static String distribution2String(randomDistribution distribution){
-<span class="nc" id="L33">		return distribution.name();</span>
+<span class="fc" id="L33">		return distribution.name();</span>
 	}
 	
 	/**
@@ -58,17 +58,17 @@ public class RandomTimer implements Timer {
 	 * @param min/max constraint
 	 * @throws Exception 
 	 */
-<span class="nc" id="L61">	public RandomTimer(randomDistribution distribution, int lolim, int hilim) throws Exception{</span>
-<span class="nc bnc" id="L62" title="All 4 branches missed.">		if(distribution == randomDistribution.POSIBILIST || distribution == randomDistribution.GAUSSIAN){</span>
-<span class="nc" id="L63">			this.distribution = distribution;</span>
-<span class="nc" id="L64">			this.mean = lolim + (hilim - lolim)/2;</span>
-<span class="nc" id="L65">			this.rate = Double.NaN;</span>
-<span class="nc" id="L66">			this.lolim = lolim;</span>
-<span class="nc" id="L67">			this.hilim = hilim;</span>
+<span class="fc" id="L61">	public RandomTimer(randomDistribution distribution, int lolim, int hilim) throws Exception{</span>
+<span class="pc bpc" id="L62" title="2 of 4 branches missed.">		if(distribution == randomDistribution.POSIBILIST || distribution == randomDistribution.GAUSSIAN){</span>
+<span class="fc" id="L63">			this.distribution = distribution;</span>
+<span class="fc" id="L64">			this.mean = lolim + (hilim - lolim)/2;</span>
+<span class="fc" id="L65">			this.rate = Double.NaN;</span>
+<span class="fc" id="L66">			this.lolim = lolim;</span>
+<span class="fc" id="L67">			this.hilim = hilim;</span>
 		}else{
 <span class="nc" id="L69">			throw new Exception(&quot;Bad Timer constructor for selected distribution&quot;);</span>
 		}
-<span class="nc" id="L71">	}</span>
+<span class="fc" id="L71">	}</span>
 	
 	public String getDistribution(){
 <span class="nc" id="L74">		return this.distribution.name();</span>
@@ -116,7 +116,7 @@ public class RandomTimer implements Timer {
 	 */
 	@Override
 	public Integer next(){
-<span class="nc bnc" id="L119" title="All 5 branches missed.">		switch (this.distribution){</span>
+<span class="pc bpc" id="L119" title="4 of 5 branches missed.">		switch (this.distribution){</span>
 		case POSIBILIST :
 <span class="nc" id="L121">			return this.nextTimePosibilist();</span>
 		case POISSON :
@@ -124,7 +124,7 @@ public class RandomTimer implements Timer {
 		case EXP :
 <span class="nc" id="L125">			return this.nextTimeExp();</span>
 		case GAUSSIAN :
-<span class="nc" id="L127">			return this.nextTimeGaussian();</span>
+<span class="fc" id="L127">			return this.nextTimeGaussian();</span>
 		}
 <span class="nc" id="L129">		return -1; // Theoretically impossible !!!</span>
 	}
@@ -176,13 +176,13 @@ public class RandomTimer implements Timer {
 	    
 	
 	private int nextTimeGaussian(){
-<span class="nc" id="L179">		return (int)this.lolim + (int)((this.r.nextGaussian() + 1.0)/2.0 * (this.hilim - this.lolim));</span>
+<span class="fc" id="L179">		return (int)this.lolim + (int)((this.r.nextGaussian() + 1.0)/2.0 * (this.hilim - this.lolim));</span>
 	}
 	
 	
 	@Override
 	public boolean hasNext() {
-<span class="nc" id="L185">		return true;</span>
+<span class="fc" id="L185">		return true;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
