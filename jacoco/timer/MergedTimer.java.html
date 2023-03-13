@@ -5,19 +5,19 @@ public class MergedTimer implements Timer{
 	private Timer timer1;
 	private Timer timer2;
 
-<span class="nc" id="L8">	public MergedTimer(Timer timer1, Timer timer2) {</span>
-<span class="nc" id="L9">		this.timer1 = timer1;</span>
-<span class="nc" id="L10">		this.timer2 = timer2;</span>
-<span class="nc" id="L11">	}</span>
+<span class="fc" id="L8">	public MergedTimer(Timer timer1, Timer timer2) {</span>
+<span class="fc" id="L9">		this.timer1 = timer1;</span>
+<span class="fc" id="L10">		this.timer2 = timer2;</span>
+<span class="fc" id="L11">	}</span>
 	@Override
 	public boolean hasNext() {
-<span class="nc bnc" id="L14" title="All 4 branches missed.">		return (this.timer1.hasNext() &amp;&amp; this.timer2.hasNext());</span>
+<span class="pc bpc" id="L14" title="1 of 4 branches missed.">		return (this.timer1.hasNext() &amp;&amp; this.timer2.hasNext());</span>
 	}
 
 	@Override
 	public Integer next() {
-<span class="nc bnc" id="L19" title="All 2 branches missed.">		if(this.hasNext()) {</span>
-<span class="nc" id="L20">			return this.timer1.next() + this.timer2.next();</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">		if(this.hasNext()) {</span>
+<span class="fc" id="L20">			return this.timer1.next() + this.timer2.next();</span>
 		}
 <span class="nc" id="L22">		return null;</span>
 	}
