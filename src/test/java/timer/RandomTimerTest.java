@@ -3,41 +3,54 @@ package timer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class RandomTimerTest {
 
     RandomTimer rt;
-    ArrayList<Integer> gaussianDistrib = new ArrayList<>();
+    int n = 100000;
+    int lolim = 0;
+    int hilim = 100;
+    double average = lolim + ((double)hilim - (double)lolim) / 2;
 
 
     @BeforeEach
     void setUp() throws Exception {
         RandomTimer.randomDistribution gauss = RandomTimer.string2Distribution("gaussian");
-        rt = new RandomTimer(gauss,0,1000);
-        for (int i = 0; i < 1000; i++) {
-            gaussianDistrib.add(rt.next());
-        }
+        rt = new RandomTimer(gauss, lolim, hilim);
     }
 
     @Test
     void string2Distribution() {
-        assertEquals(RandomTimer.randomDistribution.GAUSSIAN,RandomTimer.string2Distribution("gaussian"));
+        assertEquals(RandomTimer.randomDistribution.GAUSSIAN, RandomTimer.string2Distribution("gaussian"));
     }
 
     @Test
     void distribution2String() {
-        assertEquals("GAUSSIAN",RandomTimer.distribution2String(RandomTimer.randomDistribution.GAUSSIAN));
+        assertEquals("GAUSSIAN", RandomTimer.distribution2String(RandomTimer.randomDistribution.GAUSSIAN));
     }
 
     @Test
     void next() {
-        System.out.println(gaussianDistrib);
+        int somme = 0;
+        long sommeSqrt = 0;
+        for (int i = 0; i < n; i++) {
+            int e = rt.next();
+            somme += e;
+            sommeSqrt += (long) e * e;
+        }
+        double theoricalAvg = (double) somme / n;
+        assertTrue(average - average * 0.01 <= theoricalAvg && theoricalAvg <= average + average * 0.01);
+
+        double standardDev = Math.sqrt((n * sommeSqrt - Math.pow(somme, 2)) / (n * (n - 1)));
+        for (int i = 0; i < 50; i++) {
+            int e = rt.next();
+            assertTrue(theoricalAvg - 3*standardDev <= e && e <= theoricalAvg + 3*standardDev );
+        }
     }
 
     @Test
     void hasNext() {
+        assertTrue(rt.hasNext());
     }
 }
