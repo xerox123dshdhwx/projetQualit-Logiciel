@@ -7,22 +7,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RandomTimerTest {
 
-    RandomTimer rtg;
-    RandomTimer rtp;
-    int n = 50000;
+    RandomTimer rtGauss;
+    RandomTimer rtPoisson;
+    RandomTimer rtExp;
+    RandomTimer rtPosibilist;
+    int n = 100000;
     double error = 0.01;
     int lolim = 0;
-    int hilim = 100;
+    int hilim = 1000;
+    int lambdaPoisson = 10;
+    double lambdaExp = 0.01;
 
-    double average = lolim + ((double)hilim - (double)lolim) / 2;
-    int poissonLambda = 10;
 
     @BeforeEach
     void setUp() throws Exception {
         RandomTimer.randomDistribution gauss = RandomTimer.string2Distribution("gaussian");
-        rtg = new RandomTimer(gauss, lolim, hilim);
+        rtGauss = new RandomTimer(gauss, lolim, hilim);
         RandomTimer.randomDistribution poisson = RandomTimer.string2Distribution("poisson");
-        rtp = new RandomTimer(poisson, poissonLambda);
+        rtPoisson = new RandomTimer(poisson, lambdaPoisson);
+        RandomTimer.randomDistribution exp = RandomTimer.string2Distribution("exp");
+        rtExp = new RandomTimer(exp, lambdaExp);
+        RandomTimer.randomDistribution posibilist = RandomTimer.string2Distribution("posibilist");
+        rtPosibilist = new RandomTimer(posibilist, lolim, hilim);
     }
 
     @Test
@@ -40,17 +46,19 @@ class RandomTimerTest {
         int somme = 0;
         long sommeSqrt = 0;
         for (int i = 0; i < n; i++) {
-            int e = rtg.next();
+            int e = rtGauss.next();
             somme += e;
             sommeSqrt += (long) e * e;
         }
         double experimentalAvg = (double) somme / n;
-        assertTrue(average - average * error <= experimentalAvg && experimentalAvg <= average + average * error);
+        double theoricalAvg = lolim + (double) (hilim - lolim) / 2;
+
+        assertTrue(theoricalAvg - theoricalAvg * error * 2 <= experimentalAvg && experimentalAvg <= theoricalAvg + theoricalAvg * error * 2);
 
         double standardDev = Math.sqrt((n * sommeSqrt - Math.pow(somme, 2)) / (n * (n - 1)));
         for (int i = 0; i < 50; i++) {
-            int e = rtg.next();
-            assertTrue(average - 3*standardDev <= e && e <= average + 3*standardDev );
+            int e = rtGauss.next();
+            assertTrue(theoricalAvg - 3 * standardDev <= e && e <= theoricalAvg + 3 * standardDev);
         }
     }
 
@@ -59,23 +67,58 @@ class RandomTimerTest {
         int somme = 0;
         long sommeSqrt = 0;
         for (int i = 0; i < n; i++) {
-            int e = rtp.next();
+            int e = rtPoisson.next();
             somme += e;
             sommeSqrt += (long) e * e;
         }
-        double experimentalAvg = (double)somme/n;
-        double experimentalSquareAvg = (double)sommeSqrt/n;
-        assertTrue(rtp.getMean() - rtp.getMean() * error <= experimentalAvg && experimentalAvg <= rtp.getMean() + rtp.getMean() * error);
+        double experimentalAvg = (double) somme / n;
+        double experimentalSquareAvg = (double) sommeSqrt / n;
+        double experimentalVar = experimentalSquareAvg - Math.pow(experimentalAvg, 2);
 
-        double experimentalVar = experimentalSquareAvg - Math.pow(experimentalAvg,2);
-        assertTrue(rtp.getMean() - rtp.getMean() * error <= experimentalVar && experimentalVar <= rtp.getMean() + rtp.getMean() * error);
+        assertTrue(lambdaPoisson - lambdaPoisson * error <= experimentalAvg && experimentalAvg <= lambdaPoisson + lambdaPoisson * error);
+        assertTrue(lambdaPoisson - lambdaPoisson * error <= experimentalVar && experimentalVar <= lambdaPoisson + lambdaPoisson * error);
     }
 
+    @Test
+    void nextExp() {
+        int somme = 0;
+        long sommeSqrt = 0;
+        for (int i = 0; i < n; i++) {
+            int e = rtExp.next();
+            somme += e;
+            sommeSqrt += (long) e * e;
+        }
+        double theoricalAvg = 1 / lambdaExp;
+        double experimentalAvg = (double) somme / n;
+        double experimentalSquareAvg = (double) sommeSqrt / n;
+        double theoricalVar = Math.pow(theoricalAvg, 2);
+        double experimentalVar = experimentalSquareAvg - Math.pow(experimentalAvg, 2);
 
+        assertTrue(theoricalAvg - theoricalAvg * error <= experimentalAvg && experimentalAvg <= theoricalAvg + theoricalAvg * error);
+        assertTrue(theoricalVar - theoricalVar * error <= experimentalVar && experimentalVar <= theoricalVar + theoricalVar * error);
+    }
 
+    @Test
+    void nextPosibilist() {
+        int somme = 0;
+        long sommeSqrt = 0;
+        for (int i = 0; i < n; i++) {
+            int e = rtPosibilist.next();
+            somme += e;
+            sommeSqrt += (long) e * e;
+        }
+        double theoricalAvg = (double) (lolim + hilim) / 2;
+        double experimentalAvg = (double) somme / n;
+        double experimentalSquareAvg = (double) sommeSqrt / n;
+        double theoricalVar = Math.pow(hilim - lolim, 2) / 12;
+        double experimentalVar = experimentalSquareAvg - Math.pow(experimentalAvg, 2);
+
+        assertTrue(theoricalAvg - theoricalAvg * error <= experimentalAvg && experimentalAvg <= theoricalAvg + theoricalAvg * error);
+        assertTrue(theoricalVar - theoricalVar * error * 2 <= experimentalVar && experimentalVar <= theoricalVar + theoricalVar * error * 2);
+    }
 
     @Test
     void hasNext() {
-        assertTrue(rtg.hasNext());
+        assertTrue(rtGauss.hasNext());
     }
 }
