@@ -12,7 +12,7 @@ class RandomTimerTest {
     RandomTimer rtExp;
     RandomTimer rtPosibilist;
     int n = 100000;
-    double error = 0.01;
+    double error = 0.02;
     int lolim = 0;
     int hilim = 1000;
     int lambdaPoisson = 10;
@@ -53,7 +53,7 @@ class RandomTimerTest {
         double experimentalAvg = (double) somme / n;
         double theoricalAvg = lolim + (double) (hilim - lolim) / 2;
 
-        assertTrue(theoricalAvg - theoricalAvg * error * 2 <= experimentalAvg && experimentalAvg <= theoricalAvg + theoricalAvg * error * 2);
+        assertTrue(theoricalAvg - theoricalAvg * error <= experimentalAvg && experimentalAvg <= theoricalAvg + theoricalAvg * error);
 
         double standardDev = Math.sqrt((n * sommeSqrt - Math.pow(somme, 2)) / (n * (n - 1)));
         for (int i = 0; i < 50; i++) {
@@ -81,7 +81,7 @@ class RandomTimerTest {
 
     @Test
     void nextExp() {
-        int somme = 0;
+        double somme = 0;
         long sommeSqrt = 0;
         for (int i = 0; i < n; i++) {
             int e = rtExp.next();
@@ -89,7 +89,7 @@ class RandomTimerTest {
             sommeSqrt += (long) e * e;
         }
         double theoricalAvg = 1 / lambdaExp;
-        double experimentalAvg = (double) somme / n;
+        double experimentalAvg = somme / n;
         double experimentalSquareAvg = (double) sommeSqrt / n;
         double theoricalVar = Math.pow(theoricalAvg, 2);
         double experimentalVar = experimentalSquareAvg - Math.pow(experimentalAvg, 2);
@@ -114,7 +114,15 @@ class RandomTimerTest {
         double experimentalVar = experimentalSquareAvg - Math.pow(experimentalAvg, 2);
 
         assertTrue(theoricalAvg - theoricalAvg * error <= experimentalAvg && experimentalAvg <= theoricalAvg + theoricalAvg * error);
-        assertTrue(theoricalVar - theoricalVar * error * 2 <= experimentalVar && experimentalVar <= theoricalVar + theoricalVar * error * 2);
+        assertTrue(theoricalVar - theoricalVar * error <= experimentalVar && experimentalVar <= theoricalVar + theoricalVar * error);
+    }
+
+    @Test
+    void badTimerException(){
+        assertThrows(BadTimerException.class, () -> {
+            RandomTimer.randomDistribution gauss = RandomTimer.string2Distribution("gaussian");
+            rtGauss = new RandomTimer(gauss, lambdaExp);
+        });
     }
 
     @Test

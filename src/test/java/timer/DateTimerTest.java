@@ -4,9 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,8 +34,6 @@ class DateTimerTest {
     void next() {
         assertEquals(5,dt.next());
         assertEquals(1,dt.next());
-        NoSuchElementException thrown = assertThrows(NoSuchElementException.class, () -> {
-            dt.next();
-        });
+        assertThrows(NoSuchElementException.class, () -> dt.next());
     }
 }

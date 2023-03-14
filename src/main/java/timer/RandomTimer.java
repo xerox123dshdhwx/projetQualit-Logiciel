@@ -141,7 +141,7 @@ public class RandomTimer implements Timer {
 	 * Give wrong variance  
 	 */
 	private int nextTimePosibilist(){
-	    return (int)this.lolim + (int)(this.r.nextInt() * (this.hilim - this.lolim));
+	    return (int)this.lolim + (int)(this.r.nextDouble() * (this.hilim - this.lolim));
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class RandomTimer implements Timer {
 	 * Give wrong variance  
 	 */
 	private int nextTimeExp(){
-	    return (int)(-Math.log(1.0 - this.r.nextInt()) / this.rate);
+	    return (int)(-Math.log(1.0 - this.r.nextDouble()) / this.rate);
 	}
 	
 	
