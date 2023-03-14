@@ -34,7 +34,7 @@ public class RandomTimer implements Timer {
 	 * @param param constraint 
 	 * @throws Exception 
 	 */
-	public RandomTimer(randomDistribution distribution, double param) throws Exception{
+	public RandomTimer(randomDistribution distribution, double param) throws BadTimerException{
 		if(distribution == randomDistribution.EXP ){
 			this.distribution = distribution;
 			this.rate = param;
@@ -52,10 +52,11 @@ public class RandomTimer implements Timer {
 		}
 	}
 	/**
-	 * @param min/max constraint
+	 * @param lolim
+	 * @param hilim
 	 * @throws Exception 
 	 */
-	public RandomTimer(randomDistribution distribution, int lolim, int hilim) throws Exception{
+	public RandomTimer(randomDistribution distribution, int lolim, int hilim) throws BadTimerException{
 		if(distribution == randomDistribution.POSIBILIST || distribution == randomDistribution.GAUSSIAN){
 			this.distribution = distribution;
 			this.mean = lolim + (double) (hilim - lolim)/2;

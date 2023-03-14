@@ -11,7 +11,7 @@ public class DateTimer  implements Timer {
 	Iterator<Integer> it;
 	
 	public DateTimer(TreeSet<Integer> dates) {
-		this.lapsTimes = new Vector<>();
+		this.lapsTimes = new ArrayList<>();
 		Integer last;
 		Integer current=0;
 		
