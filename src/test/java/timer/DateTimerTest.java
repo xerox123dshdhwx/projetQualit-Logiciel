@@ -3,6 +3,7 @@ package timer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Vector;
@@ -11,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DateTimerTest {
 
-    Vector<Integer> lapsTimes;
+    ArrayList<Integer> lapsTimes;
     DateTimer dt;
 
     @BeforeEach
     void setUp() {
-        lapsTimes = new Vector<>();
+        lapsTimes = new ArrayList<>();
         lapsTimes.add(5);
         lapsTimes.add(1);
         dt = new DateTimer(lapsTimes);
@@ -33,8 +34,8 @@ class DateTimerTest {
 
     @Test
     void next() {
-        assertEquals(dt.next(),5);
-        assertEquals(dt.next(),1);
+        assertEquals(5,dt.next());
+        assertEquals(1,dt.next());
         NoSuchElementException thrown = assertThrows(NoSuchElementException.class, () -> {
             dt.next();
         });
