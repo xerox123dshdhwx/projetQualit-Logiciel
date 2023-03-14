@@ -28,7 +28,7 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	 */	
 <span class="nc" id="L29">	public DiscreteActionDependent(Object o, String baseMethodName, Timer timerBase){</span>
 <span class="nc" id="L30">		this.baseAction = new DiscreteAction(o, baseMethodName, timerBase);</span>
-<span class="nc" id="L31">		this.depedentActions = new TreeSet&lt;DiscreteAction&gt;();</span>
+<span class="nc" id="L31">		this.depedentActions = new TreeSet&lt;&gt;();</span>
 <span class="nc" id="L32">		this.it = this.depedentActions.iterator();</span>
 <span class="nc" id="L33">		this.currentAction = this.baseAction;</span>
 <span class="nc" id="L34">	}</span>
@@ -36,117 +36,62 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	public void addDependence(Object o, String depentMethodName, Timer timerDependence) {
 <span class="nc" id="L37">		this.depedentActions.add(new DiscreteAction(o, depentMethodName, timerDependence));</span>
 <span class="nc" id="L38">	}</span>
-	
-	/*private void dates2Timalapse(TreeSet&lt;Integer&gt; datesOn, TreeSet&lt;Integer&gt; datesOff, Vector&lt;Integer&gt; timeLapseOn, Vector&lt;Integer&gt; timeLapseOff) {
-		Vector&lt;Integer&gt; currentTimeLapse;
-		TreeSet&lt;Integer&gt; currentDates;
-		Integer date=0;
-		if(datesOn.first()&lt;datesOff.first()) {
-			currentTimeLapse = timeLapseOn;
-			currentDates = datesOn;
-		}else {
-			currentTimeLapse = timeLapseOff;	
-			currentDates = datesOff;		
-		}
-		Integer nextDate;
-		
-		while(datesOn.size()&gt;0 || datesOff.size()&gt;0) {
-			nextDate = currentDates.first();
-		
-			currentTimeLapse.add(nextDate - date);
-			currentDates.remove(nextDate);
-		
-			date = nextDate;
-			
-			if(currentDates == datesOn) {
-				currentDates = datesOff;
-				currentTimeLapse = timeLapseOff;
-			}else {
-				currentDates = datesOn;
-				currentTimeLapse = timeLapseOn;			
-			}
-		}
-		
-	}
-	@SuppressWarnings(&quot;unchecked&quot;)
-	public DiscreteActionDependent(Wo o, String on, TreeSet&lt;Integer&gt; datesOn, String off, TreeSet&lt;Integer&gt; datesOff){
-		Vector&lt;Integer&gt; timeLapseOn = new Vector&lt;Integer&gt;();
-		Vector&lt;Integer&gt; timeLapseOff = new Vector&lt;Integer&gt;();
-		
-		dates2Timalapse((TreeSet&lt;Integer&gt;)datesOn.clone(), (TreeSet&lt;Integer&gt;)datesOff.clone(), timeLapseOn, timeLapseOff);
-		
-		this.baseAction = new DiscreteAction(o, on, timeLapseOn);
-		this.offAction = new DiscreteAction(o, off, timeLapseOff);
-		
-		if(datesOn.first() &lt; datesOff.first()){
-			this.currentAction = this.baseAction;
-		}else{
-			this.currentAction = this.offAction;
-		}
-	}
-*/
+
 	private void reInit() {
-		//this.baseAction.updateTimeLaps();
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (Iterator&lt;DiscreteAction&gt; iter = this.depedentActions.iterator(); iter.hasNext(); ) {</span>
-<span class="nc" id="L91">		    DiscreteAction element = iter.next();</span>
-		    //element.updateTimeLaps();
-<span class="nc" id="L93">		}		</span>
-<span class="nc" id="L94">	}</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		for (Iterator&lt;DiscreteAction&gt; iter = this.depedentActions.iterator(); iter.hasNext(); ) {</span>
+<span class="nc" id="L42">			iter.next();</span>
+		}		
+<span class="nc" id="L44">	}</span>
 	
 	public void nextMethod(){
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (this.currentAction == this.baseAction){</span>
-<span class="nc" id="L98">			this.it = this.depedentActions.iterator();</span>
-<span class="nc" id="L99">			this.currentAction = this.it.next();</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		}else if(this.currentAction == this.depedentActions.last()){</span>
-<span class="nc" id="L101">			this.currentAction = this.baseAction;</span>
-<span class="nc" id="L102">			this.reInit();</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (this.currentAction == this.baseAction){</span>
+<span class="nc" id="L48">			this.it = this.depedentActions.iterator();</span>
+<span class="nc" id="L49">			this.currentAction = this.it.next();</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		}else if(this.currentAction == this.depedentActions.last()){</span>
+<span class="nc" id="L51">			this.currentAction = this.baseAction;</span>
+<span class="nc" id="L52">			this.reInit();</span>
 		}else {
-<span class="nc" id="L104">			this.currentAction = this.it.next();</span>
+<span class="nc" id="L54">			this.currentAction = this.it.next();</span>
 		}
-<span class="nc" id="L106">	}</span>
+<span class="nc" id="L56">	}</span>
 	
 	public void spendTime(int t) {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (Iterator&lt;DiscreteAction&gt; iter = this.depedentActions.iterator(); iter.hasNext(); ) {</span>
-<span class="nc" id="L110">		    DiscreteAction element = iter.next();</span>
-<span class="nc" id="L111">		    element.spendTime(t);</span>
-<span class="nc" id="L112">		}</span>
-<span class="nc" id="L113">	}</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (Iterator&lt;DiscreteAction&gt; iter = this.depedentActions.iterator(); iter.hasNext(); ) {</span>
+<span class="nc" id="L60">		    DiscreteAction element = iter.next();</span>
+<span class="nc" id="L61">		    element.spendTime(t);</span>
+<span class="nc" id="L62">		}</span>
+<span class="nc" id="L63">	}</span>
 
 	public void updateTimeLaps() {
-		// time laps is updated at the re-initialization
-		//this.currentAction.updateTimeLaps();	
-<span class="nc" id="L118">		this.nextMethod();	</span>
-<span class="nc" id="L119">	}</span>
+<span class="nc" id="L66">		this.nextMethod();	</span>
+<span class="nc" id="L67">	}</span>
 
 	public Method getMethod() {
-<span class="nc" id="L122">		return this.currentAction.getMethod();</span>
+<span class="nc" id="L70">		return this.currentAction.getMethod();</span>
 	}
 
 	public Integer getCurrentLapsTime() {
-<span class="nc" id="L126">		return this.currentAction.getCurrentLapsTime();</span>
+<span class="nc" id="L74">		return this.currentAction.getCurrentLapsTime();</span>
 	}
 
 	public Object getObject() {
-<span class="nc" id="L130">		return this.currentAction.getObject();</span>
+<span class="nc" id="L78">		return this.currentAction.getObject();</span>
 	}
 
 	public int compareTo(DiscreteActionInterface c) {
-<span class="nc" id="L134">		return this.currentAction.compareTo(c);</span>
+<span class="nc" id="L82">		return this.currentAction.compareTo(c);</span>
 	}
 
 	public Boolean isEmpty() {
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		return !this.hasNext();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		return !this.hasNext();</span>
 	}
 
 	public DiscreteActionInterface next() {
-		//Integer lapsTime = this.getNextLapsTime();
-<span class="nc" id="L143">		Method method = this.getMethod();</span>
-<span class="nc" id="L144">		Object object = this.getObject();</span>
-<span class="nc" id="L145">		return this;</span>
+<span class="nc" id="L90">		return this;</span>
 	}
 
 	public boolean hasNext() {
-<span class="nc bnc" id="L149" title="All 4 branches missed.">		return this.baseAction.hasNext() || !this.depedentActions.isEmpty();		</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">		return this.baseAction.hasNext() || !this.depedentActions.isEmpty();		</span>
 	}
 
 }

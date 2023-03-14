@@ -4,6 +4,7 @@ import timer.DateTimer;
 import timer.Timer;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.Vector;
 
@@ -16,9 +17,9 @@ public class DiscreteActionOnOffDependent implements DiscreteActionInterface {
 	protected DiscreteActionInterface onAction;
 	protected DiscreteActionInterface offAction;
 	protected DiscreteActionInterface currentAction;
-	
+
 	private Integer currentLapsTime;
-<span class="nc" id="L21">	private Integer lastOffDelay=0;</span>
+<span class="nc" id="L22">	private Integer lastOffDelay=0;</span>
 	
 	/**
 	 * Construct an On Off dependence, first action (method) called is On, then method nextMethod() is called to select the next action.
@@ -30,110 +31,67 @@ public class DiscreteActionOnOffDependent implements DiscreteActionInterface {
 	 * @param off
 	 * @param timerOff
 	 */
-	/*public DiscreteActionOnOffDependent(Wo o, Method on, Timer timerOn, Method off, Timer timerOff){
-		this.onAction = new DiscreteAction(o, on, timerOn);
-		this.offAction = new DiscreteAction(o, off, timerOff);
-		
-		this.currentAction = this.onAction;
-	}*/
 	
-<span class="nc" id="L40">	public DiscreteActionOnOffDependent(Object o, String on, Timer timerOn, String off, Timer timerOff){</span>
-<span class="nc" id="L41">		this.onAction = new DiscreteAction(o, on, timerOn);</span>
-<span class="nc" id="L42">		this.offAction = new DiscreteAction(o, off, timerOff);</span>
+<span class="nc" id="L35">	public DiscreteActionOnOffDependent(Object o, String on, Timer timerOn, String off, Timer timerOff){</span>
+<span class="nc" id="L36">		this.onAction = new DiscreteAction(o, on, timerOn);</span>
+<span class="nc" id="L37">		this.offAction = new DiscreteAction(o, off, timerOff);</span>
 		
-<span class="nc" id="L44">		this.currentAction = this.offAction;</span>
-<span class="nc" id="L45">		this.currentLapsTime = 0;</span>
-<span class="nc" id="L46">	}</span>
+<span class="nc" id="L39">		this.currentAction = this.offAction;</span>
+<span class="nc" id="L40">		this.currentLapsTime = 0;</span>
+<span class="nc" id="L41">	}</span>
 	
-	private void dates2Timalapse(TreeSet&lt;Integer&gt; datesOn, TreeSet&lt;Integer&gt; datesOff, Vector&lt;Integer&gt; timeLapseOn, Vector&lt;Integer&gt; timeLapseOff) {
-		Vector&lt;Integer&gt; currentTimeLapse;
-		TreeSet&lt;Integer&gt; currentDates;
-<span class="nc" id="L51">		Integer date=0;</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">		if(datesOn.first()&lt;datesOff.first()) {</span>
-<span class="nc" id="L53">			currentTimeLapse = timeLapseOn;</span>
-<span class="nc" id="L54">			currentDates = datesOn;</span>
-		}else {
-<span class="nc" id="L56">			currentTimeLapse = timeLapseOff;	</span>
-<span class="nc" id="L57">			currentDates = datesOff;		</span>
-		}
-		Integer nextDate;
-		
-<span class="nc bnc" id="L61" title="All 4 branches missed.">		while(datesOn.size()&gt;0 || datesOff.size()&gt;0) {</span>
-<span class="nc" id="L62">			nextDate = currentDates.first();</span>
-		
-<span class="nc" id="L64">			currentTimeLapse.add(nextDate - date);</span>
-<span class="nc" id="L65">			currentDates.remove(nextDate);</span>
-		
-<span class="nc" id="L67">			date = nextDate;</span>
-			
-<span class="nc bnc" id="L69" title="All 2 branches missed.">			if(currentDates == datesOn) {</span>
-<span class="nc" id="L70">				currentDates = datesOff;</span>
-<span class="nc" id="L71">				currentTimeLapse = timeLapseOff;</span>
-			}else {
-<span class="nc" id="L73">				currentDates = datesOn;</span>
-<span class="nc" id="L74">				currentTimeLapse = timeLapseOn;			</span>
-			}
-		}
-		
-<span class="nc" id="L78">	}</span>
-	
-<span class="nc" id="L80">	public DiscreteActionOnOffDependent(Object o, String on, TreeSet&lt;Integer&gt; datesOn, String off, TreeSet&lt;Integer&gt; datesOff){</span>
-		/*Vector&lt;Integer&gt; timeLapseOn = new Vector&lt;Integer&gt;();
-		Vector&lt;Integer&gt; timeLapseOff = new Vector&lt;Integer&gt;();
-		
-		dates2Timalapse((TreeSet&lt;Integer&gt;)datesOn.clone(), (TreeSet&lt;Integer&gt;)datesOff.clone(), timeLapseOn, timeLapseOff);
-		*/
-<span class="nc" id="L86">		this.onAction = new DiscreteAction(o, on, new DateTimer(datesOn));</span>
-<span class="nc" id="L87">		this.offAction = new DiscreteAction(o, off, new DateTimer(datesOff));</span>
+<span class="nc" id="L43">	public DiscreteActionOnOffDependent(Object o, String on, TreeSet&lt;Integer&gt; datesOn, String off, TreeSet&lt;Integer&gt; datesOff){</span>
+<span class="nc" id="L44">		this.onAction = new DiscreteAction(o, on, new DateTimer(datesOn));</span>
+<span class="nc" id="L45">		this.offAction = new DiscreteAction(o, off, new DateTimer(datesOff));</span>
 		
 		
 		
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if(datesOn.first() &lt; datesOff.first()){</span>
-<span class="nc" id="L92">			this.currentAction = this.onAction;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if(datesOn.first() &lt; datesOff.first()){</span>
+<span class="nc" id="L50">			this.currentAction = this.onAction;</span>
 		}else{
-<span class="nc" id="L94">			this.currentAction = this.offAction;</span>
+<span class="nc" id="L52">			this.currentAction = this.offAction;</span>
 		}
-<span class="nc" id="L96">	}</span>
+<span class="nc" id="L54">	}</span>
 
 	public void nextAction(){
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (this.currentAction == this.onAction){</span>
-<span class="nc" id="L100">			this.currentAction = this.offAction;</span>
-<span class="nc" id="L101">			this.currentAction = this.currentAction.next();</span>
-<span class="nc" id="L102">			this.lastOffDelay = this.currentAction.getCurrentLapsTime();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (this.currentAction == this.onAction){</span>
+<span class="nc" id="L58">			this.currentAction = this.offAction;</span>
+<span class="nc" id="L59">			this.currentAction = this.currentAction.next();</span>
+<span class="nc" id="L60">			this.lastOffDelay = this.currentAction.getCurrentLapsTime();</span>
 		}else{
-<span class="nc" id="L104">			this.currentAction = this.onAction;</span>
-<span class="nc" id="L105">			this.currentAction = this.currentAction.next();</span>
-<span class="nc" id="L106">			this.currentAction.spendTime(this.lastOffDelay);</span>
+<span class="nc" id="L62">			this.currentAction = this.onAction;</span>
+<span class="nc" id="L63">			this.currentAction = this.currentAction.next();</span>
+<span class="nc" id="L64">			this.currentAction.spendTime(this.lastOffDelay);</span>
 		}
-<span class="nc" id="L108">	}</span>
+<span class="nc" id="L66">	}</span>
 
 	public	void spendTime(int t) {
-<span class="nc" id="L111">		this.currentAction.spendTime(t);</span>
-<span class="nc" id="L112">	}</span>
+<span class="nc" id="L69">		this.currentAction.spendTime(t);</span>
+<span class="nc" id="L70">	}</span>
 
 	public Method getMethod() {
-<span class="nc" id="L115">		return this.currentAction.getMethod();</span>
+<span class="nc" id="L73">		return this.currentAction.getMethod();</span>
 	}
 
 	public Integer getCurrentLapsTime() {
-<span class="nc" id="L119">		return this.currentAction.getCurrentLapsTime();</span>
+<span class="nc" id="L77">		return this.currentAction.getCurrentLapsTime();</span>
 	}
 
 	public Object getObject() {
-<span class="nc" id="L123">		return this.currentAction.getObject();</span>
+<span class="nc" id="L81">		return this.currentAction.getObject();</span>
 	}
 
 	public int compareTo(DiscreteActionInterface c) {
-<span class="nc" id="L127">		return this.currentAction.compareTo(c);</span>
+<span class="nc" id="L85">		return this.currentAction.compareTo(c);</span>
 	}
 	
 	public DiscreteActionInterface next() {
-<span class="nc" id="L131">		this.nextAction();</span>
-<span class="nc" id="L132">		return this;</span>
+<span class="nc" id="L89">		this.nextAction();</span>
+<span class="nc" id="L90">		return this;</span>
 	}
 	
 	public boolean hasNext() {
-<span class="nc bnc" id="L136" title="All 4 branches missed.">		return this.onAction.hasNext() || this.offAction.hasNext();		</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">		return this.onAction.hasNext() || this.offAction.hasNext();		</span>
 	}
 
 	

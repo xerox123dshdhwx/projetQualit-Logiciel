@@ -4,82 +4,44 @@ public class PeriodicTimer implements Timer {
 
 	private int period;
 	private int next;
-<span class="pc" id="L7">	private RandomTimer moreOrLess = null;</span>
+<span class="fc" id="L7">	private RandomTimer moreOrLess = null;</span>
 	
 <span class="fc" id="L9">	public PeriodicTimer(int at) {</span>
 <span class="fc" id="L10">		this.period = at;</span>
 <span class="fc" id="L11">		this.next = at;</span>
 <span class="fc" id="L12">	}</span>
 	
-	/**
-	 * @param at
-	 * @param moreOrLess
-	 * 
-	 * use MergedTimer instead
-	 */
-	@Deprecated
-<span class="nc" id="L21">	public PeriodicTimer(int at, RandomTimer moreOrLess) {</span>
-<span class="nc" id="L22">		this.period = at;</span>
-<span class="nc" id="L23">		this.moreOrLess = moreOrLess;</span>
-<span class="nc" id="L24">		this.next = at + (int)(this.moreOrLess.next() - this.moreOrLess.getMean());</span>
-<span class="nc" id="L25">	}</span>
+
 	
-<span class="fc" id="L27">	public PeriodicTimer(int period, int at) {</span>
-<span class="fc" id="L28">		this.period = period;</span>
-<span class="fc" id="L29">		this.next = at;</span>
-<span class="fc" id="L30">	}</span>
-	
-	/**
-	 * @param period
-	 * @param at
-	 * @param moreOrLess
-	 * 
-	 * use MergedTimer instead
-	 */
-	@Deprecated
-<span class="nc" id="L40">	public PeriodicTimer(int period, int at, RandomTimer moreOrLess) {</span>
-<span class="nc" id="L41">		this.period = period;</span>
-<span class="nc" id="L42">		this.moreOrLess = moreOrLess;</span>
-<span class="nc" id="L43">		this.next = at + (int)(this.moreOrLess.next() - this.moreOrLess.getMean());</span>
-<span class="nc" id="L44">	}</span>
+<span class="fc" id="L16">	public PeriodicTimer(int period, int at) {</span>
+<span class="fc" id="L17">		this.period = period;</span>
+<span class="fc" id="L18">		this.next = at;</span>
+<span class="fc" id="L19">	}</span>
+
 	
 	public int getPeriod() {
-<span class="nc" id="L47">		return this.period;</span>
+<span class="nc" id="L23">		return this.period;</span>
 	}
 	
 	
 	@Override
 	public Integer next() {
 		
-<span class="fc" id="L54">		int next =  this.next;</span>
+<span class="fc" id="L30">		int i =  this.next;</span>
 		
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if(this.moreOrLess != null) {</span>
-<span class="nc" id="L57">			this.next = this.period + (int)(this.moreOrLess.next() - this.moreOrLess.getMean());</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">		if(this.moreOrLess != null) {</span>
+<span class="nc" id="L33">			this.next = this.period + (int)(this.moreOrLess.next() - this.moreOrLess.getMean());</span>
 		}else {
-<span class="fc" id="L59">			this.next = this.period;</span>
+<span class="fc" id="L35">			this.next = this.period;</span>
 		}
 		
-<span class="fc" id="L62">		return next;</span>
+<span class="fc" id="L38">		return i;</span>
 	}
-	
-	/*@Override
-	public Integer next(int since) {
-		
-		int next = (this.at - (since % this.period) + this.period) % this.period;
-		
-		if(this.moreOrLess != null) {
-			next += this.moreOrLess.next() - this.moreOrLess.getMean();
-			this.next = this.period * 2 - next;
-		}else {
-			this.next = this.period;
-		}
-		
-		return next;
-	}*/
+
 
 	@Override
 	public boolean hasNext() {
-<span class="fc" id="L82">		return true;</span>
+<span class="fc" id="L44">		return true;</span>
 	}
 
 }
