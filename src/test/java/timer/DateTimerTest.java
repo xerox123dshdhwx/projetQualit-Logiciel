@@ -33,8 +33,8 @@ class DateTimerTest {
 
     @Test
     void next() {
-        assertEquals(dt.next(),5);
-        assertEquals(dt.next(),1);
+        assertEquals(5,dt.next());
+        assertEquals(1,dt.next());
         NoSuchElementException thrown = assertThrows(NoSuchElementException.class, () -> {
             dt.next();
         });

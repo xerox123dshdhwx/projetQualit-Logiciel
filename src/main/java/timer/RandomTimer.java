@@ -11,23 +11,20 @@ import java.util.Random;
 
 public class RandomTimer implements Timer {
 	
-	public static enum randomDistribution {
+	public enum randomDistribution {
 		POISSON, EXP, POSIBILIST, GAUSSIAN;
 	}
-	
-	//private static String randomDistributionString[] = {"POISSON", "EXP", "POSIBILIST", "GAUSSIAN"};
 	
 	private Random r = new Random();
 	private randomDistribution distribution;
 	private double rate;
 	private double mean;
 	private double lolim;
-	private double hilim; 
-	//private int width; 
+	private double hilim;
 	
 	
 	public static randomDistribution string2Distribution(String distributionName){
-		return randomDistribution.valueOf(randomDistribution.class, distributionName.toUpperCase());
+		return Enum.valueOf(RandomTimer.randomDistribution.class, distributionName.toUpperCase());
 	}	
 	public static String distribution2String(randomDistribution distribution){
 		return distribution.name();
@@ -51,7 +48,7 @@ public class RandomTimer implements Timer {
 			this.lolim = 0;
 			this.hilim = Double.POSITIVE_INFINITY;
 		}else{
-			throw new Exception("Bad Timer constructor for selected distribution");
+			throw new BadTimerException("Bad Timer constructor for selected distribution");
 		}
 	}
 	/**
@@ -61,12 +58,12 @@ public class RandomTimer implements Timer {
 	public RandomTimer(randomDistribution distribution, int lolim, int hilim) throws Exception{
 		if(distribution == randomDistribution.POSIBILIST || distribution == randomDistribution.GAUSSIAN){
 			this.distribution = distribution;
-			this.mean = lolim + (hilim - lolim)/2;
+			this.mean = lolim + (double) (hilim - lolim)/2;
 			this.rate = Double.NaN;
 			this.lolim = lolim;
 			this.hilim = hilim;
 		}else{
-			throw new Exception("Bad Timer constructor for selected distribution");
+			throw new BadTimerException("Bad Timer constructor for selected distribution");
 		}
 	}
 	
@@ -136,17 +133,14 @@ public class RandomTimer implements Timer {
 	 * 
 	 * @see methodInvocator.RandomTimer#next(int)
 	 */
-	/*@Override
-	public Integer next(int since){
-		return this.next();
-	}*/
+
 	
 	/**
 	 * Give good mean
 	 * Give wrong variance  
 	 */
 	private int nextTimePosibilist(){
-	    return (int)this.lolim + (int)(this.r.nextDouble() * (this.hilim - this.lolim));
+	    return (int)this.lolim + (int)(this.r.nextInt() * (this.hilim - this.lolim));
 	}
 	
 	/**
@@ -154,7 +148,7 @@ public class RandomTimer implements Timer {
 	 * Give wrong variance  
 	 */
 	private int nextTimeExp(){
-	    return (int)(-Math.log(1.0 - this.r.nextDouble()) / this.rate);
+	    return (int)(-Math.log(1.0 - this.r.nextInt()) / this.rate);
 	}
 	
 	
@@ -164,13 +158,13 @@ public class RandomTimer implements Timer {
 	 */
 	private int nextTimePoisson() {
 	    
-	    double L = Math.exp(-this.mean);
+	    double exp = Math.exp(-this.mean);
 	    int k = 0;
 	    double p = 1.0;
 	    do {
 	        p = p * this.r.nextDouble();
 	        k++;
-	    } while (p > L);
+	    } while (p > exp);
 	    return k - 1;
 	}   		
 	    

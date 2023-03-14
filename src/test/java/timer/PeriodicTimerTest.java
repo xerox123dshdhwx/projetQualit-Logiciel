@@ -18,12 +18,12 @@ class PeriodicTimerTest {
 
     @Test
     void next() {
-        assertEquals(pt1.next(),20);
-        assertEquals(pt1.next(),10);
-        assertEquals(pt1.next(),10);
+        assertEquals(20,pt1.next());
+        assertEquals(10,pt1.next());
+        assertEquals(10,pt1.next());
 
-        assertEquals(pt2.next(),10);
-        assertEquals(pt2.next(),10);
+        assertEquals(10,pt2.next());
+        assertEquals(10,pt2.next());
     }
 
     @Test
