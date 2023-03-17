@@ -1,5 +1,7 @@
 # Projet de Qualité Logiciel
 
+[Website report](https://xerox123dshdhwx.github.io/projetQualite-Logiciel/project-reports.html)
+
 ## Rapport Coverage & Test 
 ``mvn install``
 
@@ -49,3 +51,10 @@ With that maven will be connected to your GitHub repo to push your file target/s
 [Config your .m2 folder](https://help.mulesoft.com/s/article/Where-is-my-settings-xml-file)
 
 [Config your maven GitHub plugin](https://jeanchristophegay.com/posts/publier-son-site-maven-sur-github-pages/)
+
+
+
+
+
+
+
